@@ -31,5 +31,4 @@ public class Restaurante {
     pratos.remove(prato);
   }
 
-
 }
