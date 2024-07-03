@@ -21,9 +21,10 @@ public class Restaurante {
   }
 
 
-  public void adicionaPrato(Prato prato) {
+  public Prato adicionaPrato(Prato prato) {
     pratos.add(prato);
     idPrato++;
+    return prato;
   }
 
 
