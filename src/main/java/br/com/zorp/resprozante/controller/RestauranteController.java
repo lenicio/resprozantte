@@ -7,7 +7,9 @@ import br.com.zorp.resprozante.model.Restaurante;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/restaurante")
@@ -51,10 +53,47 @@ public class RestauranteController {
       }
     }
 
-    return ResponseEntity.notFound().build();
+    Map<String, String> resposta = new HashMap<>();
+    resposta.put("mensagem", "O ID não foi encontrado!");
+
+    return ResponseEntity.status(404).body(resposta);
   }
 
 
+  @DeleteMapping("/prato")
+  public ResponseEntity<Object> deletaPrato(@RequestParam long id) {
+    Map<String, String> resposta = new HashMap<>();
 
+    for (Prato prato : restaurante.getPratos()) {
+      if (prato.getId() == id) {
+        restaurante.removePrato(prato);
+        resposta.put("mensagem", "Prato removido com sucesso!");
+        return ResponseEntity.status(200).body(resposta);
+      }
+    }
+
+    resposta.put("memsagem", "O ID Não existe!");
+    return ResponseEntity.status(404).body(resposta);
+  }
+
+
+  @PutMapping("/prato")
+  public ResponseEntity<Object> editaPrato(@RequestParam long id, @RequestBody PratoDto pratoDto) {
+
+    for (Prato prato : restaurante.getPratos()) {
+      if (prato.getId() == id) {
+        prato.setNome(pratoDto.nome());
+        prato.setValor(pratoDto.valor());
+        prato.setTipoPrato(pratoDto.tipoPrato());
+        return ResponseEntity.status(200).body(prato);
+      }
+    }
+
+    Map<String, String> resposta = new HashMap<>();
+    resposta.put("memsagem", "O ID Não existe!");
+    return ResponseEntity.status(404).body(resposta);
+
+
+  }
 
 }
