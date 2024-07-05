@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/restaurante")
+@CrossOrigin(origins = "*")
 public class RestauranteController {
 
   Restaurante restaurante = new Restaurante();
